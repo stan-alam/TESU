@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thoracic Veins Flashcards</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f6f8;
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+}
+
+h1 {
+    color: #2c3e50;
+}
+
+.card {
+    width: 80%;
+    max-width: 800px;
+    min-height: 220px;
+    margin: 20px auto;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,.15);
+    padding: 30px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.4em;
+    font-weight: bold;
+}
+
+.controls {
+    margin-top: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    margin: 5px;
+    font-size: 1em;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background: #3498db;
+    color: white;
+}
+
+button:hover {
+    background: #2980b9;
+}
+
+.counter {
+    margin-top: 15px;
+    font-size: 1.1em;
+}
+</style>
+</head>
+<body>
+
+<h1>Thoracic Veins Flashcards</h1>
+<p>Click the card to flip it.</p>
+
+<div class="card" id="card"></div>
+
+<div class="controls">
+    <button onclick="previousCard()">◀ Previous</button>
+    <button onclick="flipCard()">Flip</button>
+    <button onclick="nextCard()">Next ▶</button>
+</div>
+
+<div class="counter" id="counter"></div>
+
+<script>
+
+const flashcards = [
+
+{
+front: "Superior vena cava",
+back: "Large systemic vein that drains blood from most areas superior to the diaphragm and empties into the right atrium."
+},
+
+{
+front: "Subclavian vein",
+back: "Formed by the axillary vein entering the thoracic cavity; drains the axillary region and leads to the brachiocephalic vein."
+},
+
+{
+front: "Brachiocephalic veins",
+back: "Pair of veins formed by the union of the internal jugular and subclavian veins; lead to the superior vena cava."
+},
+
+{
+front: "Vertebral vein",
+back: "Drains the base of the brain, cervical spinal cord, and vertebrae; leads to the brachiocephalic vein."
+},
+
+{
+front: "Internal thoracic veins",
+back: "Also called internal mammary veins; drain the anterior chest wall and lead to the brachiocephalic vein."
+},
+
+{
+front: "Intercostal vein",
+back: "Drains muscles of the thoracic wall and empties into the azygos vein."
+},
+
+{
+front: "Esophageal vein",
+back: "Drains the inferior portions of the esophagus and empties into the azygos vein."
+},
+
+{
+front: "Bronchial vein",
+back: "Drains systemic circulation of the lungs and empties into the azygos vein."
+},
+
+{
+front: "Azygos vein",
+back: "Major vein on the right side of the vertebral column that drains intercostal, esophageal, bronchial, and mediastinal veins into the superior vena cava."
+},
+
+{
+front: "Hemiazygos vein",
+back: "Smaller companion to the azygos vein; drains left intercostal and esophageal veins and ultimately reaches the brachiocephalic vein."
+}
+
+];
+
+let current = 0;
+let showingFront = true;
+
+function renderCard() {
+    document.getElementById("card").innerHTML =
+        showingFront
+        ? flashcards[current].front
+        : flashcards[current].back;
+
+    document.getElementById("counter").innerHTML =
+        `Card ${current + 1} of ${flashcards.length}`;
+}
+
+function flipCard() {
+    showingFront = !showingFront;
+    renderCard();
+}
+
+function nextCard() {
+    current = (current + 1) % flashcards.length;
+    showingFront = true;
+    renderCard();
+}
+
+function previousCard() {
+    current = (current - 1 + flashcards.length) % flashcards.length;
+    showingFront = true;
+    renderCard();
+}
+
+document.getElementById("card").addEventListener("click", flipCard);
+
+renderCard();
+
+</script>
+
+</body>
+</html>
