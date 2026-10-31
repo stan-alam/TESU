@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BIO 2120 Chapter 20 Flashcards</title>
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#f4f6f9;
+    margin:0;
+    padding:20px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+h1{
+    text-align:center;
+    color:#2c3e50;
+}
+#card{
+    width:90%;
+    max-width:800px;
+    min-height:250px;
+    background:white;
+    border-radius:15px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.2);
+    padding:25px;
+    margin:20px 0;
+    cursor:pointer;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    font-size:1.25rem;
+    transition:0.3s;
+}
+#card:hover{
+    transform:scale(1.01);
+}
+.controls{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    justify-content:center;
+}
+button{
+    padding:10px 20px;
+    border:none;
+    border-radius:8px;
+    background:#3498db;
+    color:white;
+    cursor:pointer;
+    font-size:1rem;
+}
+button:hover{
+    background:#2980b9;
+}
+#counter{
+    margin-top:10px;
+    font-weight:bold;
+}
+.instructions{
+    color:#555;
+    text-align:center;
+}
+</style>
+</head>
+<body>
+
+<h1>BIO 2120 Chapter 20 Flashcards</h1>
+
+<div class="instructions">
+Click the card to flip between question and answer.
+</div>
+
+<div id="card"></div>
+
+<div class="controls">
+    <button onclick="prevCard()">⬅ Previous</button>
+    <button onclick="flipCard()">🔄 Flip</button>
+    <button onclick="nextCard()">Next ➡</button>
+    <button onclick="shuffleCards()">🔀 Shuffle</button>
+</div>
+
+<div id="counter"></div>
+
+<script>
+const flashcards = [
+{
+q:"The endothelium is found in the ______.",
+a:"Tunica intima"
+},
+{
+q:"Nervi vasorum control ______.",
+a:"Both vasoconstriction and vasodilation"
+},
+{
+q:"Closer to the heart, arteries have a higher percentage of ______.",
+a:"Elastic fibers"
+},
+{
+q:"Which best describes veins?",
+a:"Thin walled, large lumens, low pressure, have valves"
+},
+{
+q:"An especially leaky capillary found in the liver is called a ______.",
+a:"Sinusoid capillary"
+},
+{
+q:"In a blood pressure reading of 110/70, the 70 represents ______.",
+a:"Diastolic pressure"
+},
+{
+q:"A healthy elastic artery ______.",
+a:"Is compliant"
+},
+{
+q:"As blood volume decreases, what happens to blood pressure and blood flow?",
+a:"Both decrease"
+},
+{
+q:"Slight vasodilation in an arteriole causes a ______.",
+a:"Huge decrease in resistance"
+},
+{
+q:"Venoconstriction increases ______.",
+a:"Blood pressure in veins, blood flow, and venous return (all of the above)"
+},
+{
+q:"Hydrostatic pressure is ______.",
+a:"The pressure exerted by fluid in an enclosed space"
+},
+{
+q:"Net filtration pressure is calculated by ______.",
+a:"Capillary hydrostatic pressure minus blood colloid osmotic pressure"
+},
+{
+q:"More fluid exits capillaries through filtration than enters through reabsorption. True or False?",
+a:"True"
+},
+{
+q:"Clusters of neurons in the medulla that regulate blood pressure are called the ______.",
+a:"Cardiovascular center"
+},
+{
+q:"In the renin-angiotensin-aldosterone mechanism, aldosterone causes the kidneys to ______.",
+a:"Reabsorb sodium"
+},
+{
+q:"In the myogenic response, ______ responds to stretch.",
+a:"Vascular smooth muscle"
+},
+{
+q:"Shock caused by severe diarrhea or vomiting is called ______ shock.",
+a:"Hypovolemic shock"
+},
+{
+q:"The coronary arteries branch from the ______.",
+a:"Ascending aorta"
+},
+{
+q:"The radial and ulnar arteries join to form the ______.",
+a:"Palmar arch"
+},
+{
+q:"Arteries serving the stomach, pancreas, and liver arise from the ______.",
+a:"Celiac trunk"
+},
+{
+q:"The right and left brachiocephalic veins ______.",
+a:"Drain into the superior vena cava (all statements are true)"
+},
+{
+q:"The hepatic portal system delivers blood from digestive organs to the ______.",
+a:"Liver"
+},
+{
+q:"Blood islands are ______.",
+a:"Masses of developing blood vessels and formed elements in the embryonic disc"
+},
+{
+q:"One umbilical vein carries ______ blood from the placenta to the fetus.",
+a:"Oxygen-rich"
+},
+{
+q:"The ductus venosus allows ______.",
+a:"Most freshly oxygenated blood to flow into the fetal heart"
+}
+];
+
+let current = 0;
+let showingAnswer = false;
+
+const card = document.getElementById("card");
+const counter = document.getElementById("counter");
+
+function displayCard() {
+    card.innerHTML = showingAnswer
+        ? "<strong>Answer:</strong><br><br>" + flashcards[current].a
+        : "<strong>Question:</strong><br><br>" + flashcards[current].q;
+
+    counter.textContent =
+        `Card ${current + 1} of ${flashcards.length}`;
+}
+
+function flipCard() {
+    showingAnswer = !showingAnswer;
+    displayCard();
+}
+
+function nextCard() {
+    current = (current + 1) % flashcards.length;
+    showingAnswer = false;
+    displayCard();
+}
+
+function prevCard() {
+    current = (current - 1 + flashcards.length) % flashcards.length;
+    showingAnswer = false;
+    displayCard();
+}
+
+function shuffleCards() {
+    for (let i = flashcards.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        [flashcards[i], flashcards[j]] =
+        [flashcards[j], flashcards[i]];
+    }
+    current = 0;
+    showingAnswer = false;
+    displayCard();
+}
+
+card.addEventListener("click", flipCard);
+
+displayCard();
+</script>
+
+</body>
+</html>

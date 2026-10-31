@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>BIO 2120 Chapter 20 Complete Flashcards</title>
+
+<style>
+body{
+    font-family:Arial,sans-serif;
+    background:#f4f6f9;
+    margin:0;
+    padding:20px;
+}
+
+h1{
+    text-align:center;
+}
+
+.card{
+    max-width:950px;
+    margin:20px auto;
+    background:white;
+    padding:30px;
+    border-radius:12px;
+    box-shadow:0 4px 12px rgba(0,0,0,.2);
+    min-height:350px;
+}
+
+.controls{
+    text-align:center;
+    margin-top:20px;
+}
+
+button{
+    padding:10px 20px;
+    margin:5px;
+    font-size:16px;
+    cursor:pointer;
+}
+
+#counter{
+    text-align:center;
+    font-weight:bold;
+    margin-top:10px;
+}
+
+ul{
+    text-align:left;
+}
+</style>
+</head>
+<body>
+
+<h1>BIO 2120 Chapter 20 Flashcards</h1>
+
+<div class="card" id="card"></div>
+
+<div id="counter"></div>
+
+<div class="controls">
+    <button onclick="prevCard()">Previous</button>
+    <button onclick="flipCard()">Flip</button>
+    <button onclick="nextCard()">Next</button>
+    <button onclick="shuffleCards()">Shuffle</button>
+</div>
+
+<script>
+
+const flashcards = [
+    // Put all 25 expanded cards here
+];
+
+let current=0;
+let flipped=false;
+
+function render(){
+    document.getElementById("card").innerHTML =
+    flipped ? flashcards[current].back : flashcards[current].front;
+
+    document.getElementById("counter").innerText =
+    `Card ${current+1} of ${flashcards.length}`;
+}
+
+function flipCard(){
+    flipped=!flipped;
+    render();
+}
+
+function nextCard(){
+    current=(current+1)%flashcards.length;
+    flipped=false;
+    render();
+}
+
+function prevCard(){
+    current=(current-1+flashcards.length)%flashcards.length;
+    flipped=false;
+    render();
+}
+
+function shuffleCards(){
+    flashcards.sort(()=>Math.random()-0.5);
+    current=0;
+    flipped=false;
+    render();
+}
+
+render();
+
+</script>
+</body>
+</html>
