@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pituitary Gland Flash Cards</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#f0f4f8;
+    margin:0;
+    padding:20px;
+    text-align:center;
+}
+
+h1{
+    color:#1e3a8a;
+}
+
+.card-container{
+    perspective:1000px;
+    width:90%;
+    max-width:700px;
+    margin:20px auto;
+}
+
+.card{
+    width:100%;
+    height:350px;
+    position:relative;
+    transform-style:preserve-3d;
+    transition:transform 0.6s;
+    cursor:pointer;
+}
+
+.card.flipped{
+    transform:rotateY(180deg);
+}
+
+.side{
+    position:absolute;
+    width:100%;
+    height:100%;
+    backface-visibility:hidden;
+    border-radius:15px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:30px;
+    box-sizing:border-box;
+    box-shadow:0 4px 10px rgba(0,0,0,.2);
+    font-size:1.3rem;
+}
+
+.front{
+    background:white;
+}
+
+.back{
+    background:#2563eb;
+    color:white;
+    transform:rotateY(180deg);
+    text-align:left;
+}
+
+.controls{
+    margin-top:20px;
+}
+
+button{
+    padding:12px 20px;
+    margin:5px;
+    border:none;
+    border-radius:8px;
+    background:#2563eb;
+    color:white;
+    font-size:1rem;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#1d4ed8;
+}
+
+.progress{
+    margin-top:15px;
+    font-weight:bold;
+    color:#444;
+}
+</style>
+</head>
+<body>
+
+<h1>Pituitary Gland Flash Cards</h1>
+<p>Click the card to reveal the answer.</p>
+
+<div class="card-container">
+    <div class="card" id="card">
+        <div class="side front" id="front"></div>
+        <div class="side back" id="back"></div>
+    </div>
+</div>
+
+<div class="controls">
+    <button onclick="previousCard()">⬅ Previous</button>
+    <button onclick="shuffleCards()">🔀 Shuffle</button>
+    <button onclick="nextCard()">Next ➡</button>
+</div>
+
+<div class="progress" id="progress"></div>
+
+<script>
+
+const flashcards = [
+
+{
+question:"Growth Hormone (GH)",
+answer:`
+<b>Pituitary Lobe:</b> Anterior<br><br>
+<b>Chemical Class:</b> Protein<br><br>
+<b>Effect:</b> Promotes growth of body tissues
+`
+},
+
+{
+question:"Prolactin (PRL)",
+answer:`
+<b>Pituitary Lobe:</b> Anterior<br><br>
+<b>Chemical Class:</b> Peptide<br><br>
+<b>Effect:</b> Promotes milk production from mammary glands
+`
+},
+
+{
+question:"Thyroid-Stimulating Hormone (TSH)",
+answer:`
+<b>Pituitary Lobe:</b> Anterior<br><br>
+<b>Chemical Class:</b> Glycoprotein<br><br>
+<b>Effect:</b> Stimulates thyroid hormone release from thyroid
+`
+},
+
+{
+question:"Adrenocorticotropic Hormone (ACTH)",
+answer:`
+<b>Pituitary Lobe:</b> Anterior<br><br>
+<b>Chemical Class:</b> Peptide<br><br>
+<b>Effect:</b> Stimulates hormone release by adrenal cortex
+`
+},
+
+{
+question:"Follicle-Stimulating Hormone (FSH)",
+answer:`
+<b>Pituitary Lobe:</b> Anterior<br><br>
+<b>Chemical Class:</b> Glycoprotein<br><br>
+<b>Effect:</b> Stimulates gamete production in gonads
+`
+},
+
+{
+question:"Luteinizing Hormone (LH)",
+answer:`
+<b>Pituitary Lobe:</b> Anterior<br><br>
+<b>Chemical Class:</b> Glycoprotein<br><br>
+<b>Effect:</b> Stimulates androgen production by gonads
+`
+},
+
+{
+question:"Antidiuretic Hormone (ADH)",
+answer:`
+<b>Pituitary Lobe:</b> Posterior<br><br>
+<b>Chemical Class:</b> Peptide<br><br>
+<b>Effect:</b> Stimulates water reabsorption by kidneys
+`
+},
+
+{
+question:"Oxytocin",
+answer:`
+<b>Pituitary Lobe:</b> Posterior<br><br>
+<b>Chemical Class:</b> Peptide<br><br>
+<b>Effect:</b> Stimulates uterine contractions during childbirth
+`
+},
+
+{
+question:"Melanocyte-Stimulating Hormone (MSH)",
+answer:`
+<b>Pituitary Lobe:</b> Intermediate Zone<br><br>
+<b>Chemical Class:</b> Peptide<br><br>
+<b>Effect:</b> Stimulates melanin formation in melanocytes
+`
+}
+
+];
+
+let current = 0;
+
+const card = document.getElementById("card");
+const front = document.getElementById("front");
+const back = document.getElementById("back");
+const progress = document.getElementById("progress");
+
+function displayCard(){
+    front.innerHTML = `<h2>${flashcards[current].question}</h2>`;
+    back.innerHTML = flashcards[current].answer;
+    card.classList.remove("flipped");
+    progress.textContent = `Card ${current + 1} of ${flashcards.length}`;
+}
+
+card.addEventListener("click", () => {
+    card.classList.toggle("flipped");
+});
+
+function nextCard(){
+    current = (current + 1) % flashcards.length;
+    displayCard();
+}
+
+function previousCard(){
+    current = (current - 1 + flashcards.length) % flashcards.length;
+    displayCard();
+}
+
+function shuffleCards(){
+    for(let i = flashcards.length - 1; i > 0; i--){
+        const j = Math.floor(Math.random() * (i + 1));
+        [flashcards[i], flashcards[j]] =
+        [flashcards[j], flashcards[i]];
+    }
+    current = 0;
+    displayCard();
+}
+
+displayCard();
+
+</script>
+
+</body>
+</html>
